@@ -1,5 +1,7 @@
 #![feature(rustc_private)]
 
+// https://github.com/rust-lang/rustc-dev-guide/blob/master/examples/rustc-driver-interacting-with-the-ast.rs
+
 // NOTE: For the example to compile, you will need to first run the following:
 //   rustup component add rustc-dev llvm-tools-preview
 
@@ -42,7 +44,7 @@ fn another_method() {
 }
 
 fn main() {
-    let message = "Hello, W!";
+    let message = "Hello, World!";
     let i = 2 + 3;
     println!("{message}, {i}");
     another_method();
@@ -62,52 +64,59 @@ fn main() {
         make_codegen_backend: None,
         registry: registry::Registry::new(&rustc_error_codes::DIAGNOSTICS),
     };
+    // rustc_interface::run_compiler(config, |compiler| {
+    //     compiler.enter(|queries| {
+    //         // let ast_krate = queries.parse().unwrap().get_mut().clone();
+    //         // for item in ast_krate.items {
+    //         //     println!("{}", item_to_string(&item));
+    //         //     println!()
+    //         // }
+    //         queries.global_ctxt().unwrap().enter(|tcx| {
+    //             let hir_krate = tcx.hir();
+    //             for id in hir_krate.items() {
+    //                 let item = hir_krate.item(id);
+    //                 println!("{:?}", item.kind);
+    //             }
+    //         });
+    //     });
+    // });
     rustc_interface::run_compiler(config, |compiler| {
         compiler.enter(|queries| {
+            // TODO: add this to -Z unpretty
             // let ast_krate = queries.parse().unwrap().get_mut().clone();
             // for item in ast_krate.items {
             //     println!("{}", item_to_string(&item));
-            //     println!()
             // }
+            // Analyze the crate and inspect the types under the cursor.
             queries.global_ctxt().unwrap().enter(|tcx| {
+                // Every compilation contains a single crate.
                 let hir_krate = tcx.hir();
+                // Iterate over the top-level items in the crate, looking for the main function.
                 for id in hir_krate.items() {
                     let item = hir_krate.item(id);
-                    println!("{:?}", item.kind);
+                    // Use pattern-matching to find a specific node inside the main function.
+                    if let rustc_hir::ItemKind::Fn(_, _, body_id) = item.kind {
+                        let expr = &tcx.hir().body(body_id).value;
+                        // let hir_id = expr.hir_id; // hir_id identifies the string "Hello, world!"
+                        // let def_id = item.hir_id().owner.def_id; // def_id identifies the main function
+                        // let ty = tcx.typeck(def_id).node_type(hir_id);
+                        // println!("{expr:#?}: {ty:?}");
+
+                        if let rustc_hir::ExprKind::Block(block, _) = expr.kind {
+                            // https://doc.rust-lang.org/nightly/nightly-rustc/rustc_hir/hir/enum.ExprKind.html
+                            //println!("{:#?}", block);
+                            if let rustc_hir::StmtKind::Local(local) = block.stmts[0].kind {
+                                if let Some(expr) = local.init {
+                                    let hir_id = expr.hir_id; // hir_id identifies the string "Hello, world!"
+                                    let def_id = item.hir_id().owner.def_id; // def_id identifies the main function
+                                    let ty = tcx.typeck(def_id).node_type(hir_id);
+                                    println!("{expr:#?}: {ty:?}");
+                                }
+                            }
+                        }
+                    }
                 }
-            });
+            })
         });
     });
-    // rustc_interface::run_compiler(config, |compiler| {
-    //     compiler.enter(|queries| {
-    //         // TODO: add this to -Z unpretty
-    //         let ast_krate = queries.parse().unwrap().get_mut().clone();
-    //         for item in ast_krate.items {
-    //             println!("{}", item_to_string(&item));
-    //         }
-    //         // Analyze the crate and inspect the types under the cursor.
-    //         queries.global_ctxt().unwrap().enter(|tcx| {
-    //             // Every compilation contains a single crate.
-    //             let hir_krate = tcx.hir();
-    //             // Iterate over the top-level items in the crate, looking for the main function.
-    //             for id in hir_krate.items() {
-    //                 let item = hir_krate.item(id);
-    //                 // Use pattern-matching to find a specific node inside the main function.
-    //                 if let rustc_hir::ItemKind::Fn(_, _, body_id) = item.kind {
-    //                     let expr = &tcx.hir().body(body_id).value;
-    //                     if let rustc_hir::ExprKind::Block(block, _) = expr.kind {
-    //                         if let rustc_hir::StmtKind::Local(local) = block.stmts[0].kind {
-    //                             if let Some(expr) = local.init {
-    //                                 let hir_id = expr.hir_id; // hir_id identifies the string "Hello, world!"
-    //                                 let def_id = item.hir_id().owner.def_id; // def_id identifies the main function
-    //                                 let ty = tcx.typeck(def_id).node_type(hir_id);
-    //                                 println!("{expr:#?}: {ty:?}");
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         })
-    //     });
-    // });
 }
