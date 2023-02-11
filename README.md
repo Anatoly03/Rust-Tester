@@ -27,50 +27,19 @@ pub fn subtract_two_numbers(a : i64, b : i64) : i64 {
 ## Grading Tests
 
 ```rs
-#[grade("should add numbers", 50%, 75%)]
-mod add_tests {
-    use crate::add_two_numbers;
+#[cfg(test)]
+mod tests {
+    let static DEADLINE = /* ... */;
+    use crate::{add_two_numbers, subtract_two_numbers};
 
     #[test]
-    pub fn zeroes() {
-        assert_eq!(0, add_two_numbers(0, 0));
+    pub fn add_test() {
+        assert_eq!(15, add_two_numbers(6, 9));
     }
 
-    #[test]
-    pub fn left_zero() {
-        assert_eq!(5, add_two_numbers(0, 5));
-    }
-
-    #[test]
-    pub fn right_zero() {
-        assert_eq!(7, add_two_numbers(7, 0));
-    }
-
-    #[test]
-    pub fn negative() {
-        assert_eq!(-1, add_two_numbers(-7, 6));
+    #[test, test_after(DEADLINE)]
+    pub fn sub_test() {
+        assert_eq!(-2, sub_two_numbers(7, 9));
     }
 }
-
-#[grade("should subtract numbers"), visible_after(/* TIMESTAMP */)]
-mod sub_tests {
-    use crate::subtract_two_numbers;
-
-    #[test]
-    pub fn zeroes() {
-        assert_eq!(0, subtract_two_numbers(0, 0));
-    }
-
-    #[test]
-    pub fn negative() {
-        assert_eq!(-15, add_two_numbers(-7, 6));
-    }
-}
-```
-
-## Should Result
-
-```
-Test Case "should add numbers" passed
-Hidden Tests will be executed after deadline
 ```
