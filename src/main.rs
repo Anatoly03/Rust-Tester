@@ -1,5 +1,7 @@
 #![feature(rustc_private)]
 
+use std::process::Command;
+
 mod repository;
 mod arg_reader;
 mod templates;
@@ -25,6 +27,15 @@ fn main() {
     let generated = repository::util::combine(grading, to_grade);
 
     let _ = generated.write_to("debug_test");
+
+    let echo = Command::new("cargo")
+            .current_dir("debug_test")
+            .args(["test"])
+            .output()
+            .expect("failed to execute process");
+
+    println!("{}", String::from_utf8(echo.stdout).unwrap());
+
     // println!("{:#?}", generated.files);
 
     // println!("{:#?}", to_grade.files);
