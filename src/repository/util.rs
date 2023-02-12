@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, path::Path};
 
 use super::repo::Repository;
 
@@ -36,8 +36,14 @@ pub fn combine(grading: Repository, to_grade: Repository) -> Repository {
 
 impl Repository {
     pub fn write_to(&self, path: &str) -> Result<(), std::io::Error> {
+        println!("{:#?}", self.files);
         for (key, value) in &self.files {
-            fs::write(path.to_string() + "/" + key, value)?;
+            let p = path.to_string() + "/" + key;
+            println!("{}", p);
+            // https://stackoverflow.com/a/59046435
+            let prefix = Path::new(&p).parent().unwrap();
+            std::fs::create_dir_all(prefix).unwrap();
+            fs::write(p, value)?;
         }
 
         Ok(())
