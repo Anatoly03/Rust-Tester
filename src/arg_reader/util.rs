@@ -1,8 +1,8 @@
 use std::{collections::VecDeque, env};
 
 pub struct EnvArgsConfig {
-    to_grade: Option<String>,
-    grading: Option<String>,
+    pub to_grade: Option<String>,
+    pub grading: Option<String>,
 }
 
 impl EnvArgsConfig {

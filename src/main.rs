@@ -1,8 +1,6 @@
 #![feature(rustc_private)]
 #![feature(try_blocks)]
 
-use std::path::Path;
-
 mod repo_generator;
 mod arg_reader;
 
@@ -19,11 +17,16 @@ mod arg_reader;
  */
 
 fn main() {
-    arg_reader::util::get_config();
+    let config = arg_reader::util::get_config();
 
-    let k = repo_generator::repo::Repository::try_from(Path::new("example/grading"));
+    let grading = repo_generator::repo::Repository::from(config.grading.unwrap().as_str());
+    let to_grade = repo_generator::repo::Repository::from(config.to_grade.unwrap().as_str());
 
-    if let Ok(repo) = k {
-        println!("{:?}", repo.files)
+    if let Ok(repo) = grading {
+        println!("{:#?}", repo.files)
+    }
+
+    if let Ok(repo) = to_grade {
+        println!("{:#?}", repo.files)
     }
 }

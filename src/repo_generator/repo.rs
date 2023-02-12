@@ -13,6 +13,10 @@ impl Repository {
             files: HashMap::new(),
         }
     }
+
+    pub fn from(path: &str) -> Result<Repository, std::io::Error> {
+        Self::try_from(Path::new(path))
+    }
 }
 
 /**
