@@ -30,8 +30,8 @@ merges into the following code base:
 │   ├── ...     # To-Grade
 │   └── test    # Grading
 │       └── ... # Grading
-├── Cargo.lock  # To-Grade
-└── Cargo.toml  # To-Grade
+├── Cargo.lock  # To-Grade or Grading?
+└── Cargo.toml  # To-Grade or Grading?
 ```
 
 ## Main
