@@ -2,9 +2,13 @@
 
 Grading project with following given repositories:
 
+## Repositories
+
 ```py
 # To-Grade Repository 
 ├── src
+│   ├── program
+│   │   └── ... # Grade program in this directory.
 │   ├── main.rs
 │   └── ...
 ├── Cargo.lock
@@ -19,54 +23,42 @@ Grading project with following given repositories:
 │       └── grading.rs
 ├── Cargo.lock
 └── Cargo.toml
-```
 
-merges into the following code base:
-
-```py
-# Generated Code Grading
-├── src
-│   ├── main.rs # To-Grade
-│   ├── ...     # To-Grade
+################# Generated Code Grading
+├── src         #
+│   ├── main.rs #
+│   ├── program # To-Grade
+│   │   └── ... # To-Grade
+│   ├── ...     #
 │   └── test    # Grading
 │       └── ... # Grading
-├── Cargo.lock  # To-Grade or Grading?
-└── Cargo.toml  # To-Grade or Grading?
+├── Cargo.lock  #
+└── Cargo.toml  #
 ```
 
-### Main
+## Writing Tests
+
+### To-Grade 
 
 ```rs
-pub fn add_two_numbers(a : i64, b : i64) : i64 {
-    a + b
-}
-
-pub fn subtract_two_numbers(a : i64, b : i64) : i64 {
-    a - b
+pub fn add(left: usize, right: usize) -> usize {
+    left + right
 }
 ```
 
 ### Grading Tests
 
-You'll need this later: https://blog.rust-lang.org/2018/12/21/Procedural-Macros-in-Rust-2018.html
-
 ```rs
-#[cfg(test)]
-mod tests {
-    let static DEADLINE = /* ... */;
-    use crate::{add_two_numbers, subtract_two_numbers};
+use crate::path::to::*;
 
-    #[test]
-    pub fn add_test() {
-        assert_eq!(15, add_two_numbers(6, 9));
-    }
-
-    #[test, test_after(DEADLINE)]
-    pub fn sub_test() {
-        assert_eq!(-2, sub_two_numbers(7, 9));
-    }
+#[test]
+fn it_works() {
+    let result = add(2, 2);
+    assert_eq!(result, 4);
 }
 ```
+
+TODO use this for better testing api: https://blog.rust-lang.org/2018/12/21/Procedural-Macros-in-Rust-2018.html
 
 ### Ideas for Grading IO
 
