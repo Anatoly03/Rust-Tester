@@ -1,4 +1,18 @@
-use std::{env, collections::VecDeque};
+use std::{collections::VecDeque, env};
+
+pub struct EnvArgsConfig {
+    to_grade: Option<String>,
+    grading: Option<String>,
+}
+
+impl EnvArgsConfig {
+    fn new() -> Self {
+        Self {
+            to_grade: None,
+            grading: None,
+        }
+    }
+}
 
 /**
  * Get Arguments from Environment
@@ -20,23 +34,26 @@ fn get_args_clean() -> VecDeque<String> {
 /**
  * Get Configuration from Environment Arguments
  */
-pub fn get_config() {
+pub fn get_config() -> EnvArgsConfig {
+    let mut env_args = EnvArgsConfig::new();
     let mut args = get_args_clean();
 
     while args.len() > 0 {
         match args.pop_front() {
             Some(k) => match k.as_str() {
                 "--test" => {
-                    println!("Testing with: {}", args.pop_front().unwrap())
-                },
+                    env_args.to_grade = Some(args.pop_front().unwrap());
+                    // TODO: err handler
+                }
                 "--grade" => {
-                    println!("Grading with: {}", args.pop_front().unwrap())
-                },
-                _ => todo!()
-            }
-            None => {
-                break
-            }
+                    env_args.grading = Some(args.pop_front().unwrap());
+                    // TODO: err handler
+                }
+                _ => todo!(),
+            },
+            None => break,
         }
     }
+
+    env_args
 }
