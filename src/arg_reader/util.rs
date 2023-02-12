@@ -42,11 +42,11 @@ pub fn get_config() -> EnvArgsConfig {
         match args.pop_front() {
             Some(k) => match k.as_str() {
                 "--test" => {
-                    env_args.to_grade = Some(args.pop_front().unwrap());
+                    env_args.grading = Some(args.pop_front().unwrap());
                     // TODO: err handler
                 }
                 "--grade" => {
-                    env_args.grading = Some(args.pop_front().unwrap());
+                    env_args.to_grade = Some(args.pop_front().unwrap());
                     // TODO: err handler
                 }
                 _ => todo!(),
