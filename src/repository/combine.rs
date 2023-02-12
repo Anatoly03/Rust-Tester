@@ -15,6 +15,7 @@ pub fn combine(grading: Repository, to_grade: Repository) -> Repository {
 
         // If in source directory but not testing, take all files from to_grade
 
+        // println!("K: {},  B: {}", &key, is_src && !is_test && !is_main);
         if is_src && !is_test && !is_main {
             repo.files.insert(key, value);
         }
@@ -22,6 +23,7 @@ pub fn combine(grading: Repository, to_grade: Repository) -> Repository {
 
     for (key, value) in grading.files {
         // Place all files that don't exist yet -> testing, parent of src
+        // println!("K: {},   C: {}", &key, !repo.files.contains_key(&key));
         if !repo.files.contains_key(&key) {
             repo.files.insert(key, value);
         }

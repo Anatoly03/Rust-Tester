@@ -20,14 +20,11 @@ mod templates;
 fn main() {
     let config = arg_reader::util::get_config();
 
-    let grading = repository::repo::Repository::from(config.grading.unwrap().as_str());
-    let to_grade = repository::repo::Repository::from(config.to_grade.unwrap().as_str());
+    let grading = repository::repo::Repository::from(config.grading.unwrap().as_str()).unwrap();
+    let to_grade = repository::repo::Repository::from(config.to_grade.unwrap().as_str()).unwrap();
 
-    if let Ok(repo) = grading {
-        println!("{:#?}", repo.files)
-    }
+    let generated = repository::combine::combine(grading, to_grade);
+    println!("{:#?}", generated.files);
 
-    if let Ok(repo) = to_grade {
-        println!("{:#?}", repo.files)
-    }
+    // println!("{:#?}", to_grade.files);
 }
