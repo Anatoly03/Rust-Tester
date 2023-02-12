@@ -1,2 +1,57 @@
+use std::{collections::HashMap, fs, io::ErrorKind, path::Path};
 
-pub struct Repository {}
+/**
+   Contains the list of files `[address -> content]`
+*/
+pub struct Repository {
+    pub files: HashMap<String, String>,
+}
+
+impl Repository {
+    pub fn new() -> Self {
+        Self {
+            files: HashMap::new(),
+        }
+    }
+}
+
+/**
+ * Clones a Repository from Path
+ */
+impl<'a> TryFrom<&'a Path> for Repository {
+    type Error = std::io::Error;
+
+    fn try_from(parent: &'a Path) -> Result<Self, Self::Error> {
+        try {
+            let mut repo = Repository::new();
+
+            if !fs::metadata(parent)?.is_dir() {
+                return Err(std::io::Error::new(
+                    ErrorKind::InvalidInput,
+                    "expected directory, got file",
+                ));
+            }
+
+            // TODO error handler
+            let paths = fs::read_dir(parent)?;
+
+            for path in paths {
+                let pt = path.unwrap().path();
+
+                // TODO make this beautiful and readable
+
+                if fs::metadata(&pt)?.is_dir() {
+                    let child_repo = Self::try_from(pt.as_path())?;
+                    for (path, content) in child_repo.files {
+                        repo.files.insert(path, content);
+                    }
+                } else {
+                    repo.files
+                        .insert(pt.to_string_lossy().to_string(), fs::read_to_string(pt)?);
+                }
+            }
+
+            repo
+        }
+    }
+}
