@@ -11,10 +11,11 @@ pub fn combine(grading: Repository, to_grade: Repository) -> Repository {
     for (key, value) in to_grade.files {
         let is_src = (&key).starts_with("src/");
         let is_test = (&key).starts_with("src/test/");
+        let is_main = (&key).starts_with("src/main.rs");
 
         // If in source directory but not testing, take all files from to_grade
 
-        if is_src && !is_test {
+        if is_src && !is_test && !is_main {
             repo.files.insert(key, value);
         }
     }
