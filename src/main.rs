@@ -28,6 +28,8 @@ fn main() {
 
     let _ = generated.write_to("debug_test");
 
+    // TODO change to use rustc
+
     let echo = Command::new("cargo")
             .current_dir("debug_test")
             .args(["test"])
