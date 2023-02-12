@@ -1,15 +1,37 @@
 # Ideas
 
-Test project with given grading tests
+Grading project with following given repositories:
 
-```
+```py
+# To-Grade Repository 
 ├── src
-│   ├── project-src
-│   │   ├── main.rs
-│   └── test-src
-│       ├── grading.rs
+│   ├── main.rs
+│   └── ...
 ├── Cargo.lock
 └── Cargo.toml
+
+# Grading Repository
+├── src
+│   ├── main.rs
+│   ├── ...
+│   └── test
+│       ├── ... # Unit Tests grading code
+│       └── grading.rs
+├── Cargo.lock
+└── Cargo.toml
+```
+
+merges into the following code base:
+
+```py
+# Generated Code Grading
+├── src
+│   ├── main.rs # To-Grade
+│   ├── ...     # To-Grade
+│   └── test    # Grading
+│       └── ... # Grading
+├── Cargo.lock  # To-Grade
+└── Cargo.toml  # To-Grade
 ```
 
 ## Main
