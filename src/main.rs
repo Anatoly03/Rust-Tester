@@ -2,10 +2,9 @@
 
 // mod ast_reader;
 // mod diagnostics;
-mod driver;
+// mod driver;
+mod running_code;
 
 fn main() {
-    // ast_reader::run();
-    // diagnostics::run();
-    driver::run();
+    running_code::run();
 }
