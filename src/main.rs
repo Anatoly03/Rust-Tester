@@ -24,7 +24,9 @@ fn main() {
     let to_grade = repository::repo::Repository::from(config.to_grade.unwrap().as_str()).unwrap();
 
     let generated = repository::util::combine(grading, to_grade);
-    println!("{:#?}", generated.files);
+
+    let _ = generated.write_to("debug_test");
+    // println!("{:#?}", generated.files);
 
     // println!("{:#?}", to_grade.files);
 }

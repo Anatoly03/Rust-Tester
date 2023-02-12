@@ -1,3 +1,5 @@
+use std::fs;
+
 use super::repo::Repository;
 
 /**
@@ -30,4 +32,14 @@ pub fn combine(grading: Repository, to_grade: Repository) -> Repository {
     }
 
     repo
+}
+
+impl Repository {
+    pub fn write_to(&self, path: &str) -> Result<(), std::io::Error> {
+        for (key, value) in &self.files {
+            fs::write(path.to_string() + "/" + key, value)?;
+        }
+
+        Ok(())
+    }
 }
