@@ -36,10 +36,10 @@ pub fn combine(grading: Repository, to_grade: Repository) -> Repository {
 
 impl Repository {
     pub fn write_to(&self, path: &str) -> Result<(), std::io::Error> {
-        println!("{:#?}", self.files);
+        // println!("{:#?}", self.files);
         for (key, value) in &self.files {
             let p = path.to_string() + "/" + key;
-            println!("{}", p);
+            // println!("{}", p);
             // https://stackoverflow.com/a/59046435
             let prefix = Path::new(&p).parent().unwrap();
             std::fs::create_dir_all(prefix).unwrap();
