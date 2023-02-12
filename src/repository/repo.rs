@@ -15,7 +15,18 @@ impl Repository {
     }
 
     pub fn from(path: &str) -> Result<Repository, std::io::Error> {
-        Self::try_from(Path::new(path))
+        Self::try_from(Path::new(path))?.clean(path)
+    }
+
+    pub fn clean(self, prefix: &str) -> Result<Repository, std::io::Error> {
+        let mut clean_repo = Repository::new();
+
+        for (path, content) in self.files {
+            let new_path = path.strip_prefix(prefix).unwrap().to_owned();
+            clean_repo.files.insert(new_path, content);
+        }
+
+        Ok(clean_repo)
     }
 }
 
