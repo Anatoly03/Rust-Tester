@@ -67,3 +67,29 @@ mod tests {
     }
 }
 ```
+
+### Ideas for Grading IO
+
+IO Tests should execute a method on another thread and communicate with it over `sout` and `sin`.
+Powerful behaviour to access print behaviour should also be included.
+
+```rs
+#[cfg(test)]
+mod io_grading {
+    use crate::{main};
+
+    #[test, io_test(main)]
+    pub fn hello_test() {
+        println!("Write 0 to get greeted or write 1 to see a crab."); // Assert 
+        sys_in!("0"); // Write to system.out -> system.in in grading file
+        println!("Hello, World!");
+    }
+
+    #[test, io_test(main)]
+    pub fn crab_test() {
+        println!("Write 0 to get greeted or write 1 to see a crab.");
+        sys_in!("1");
+        println!("🦀");
+    }
+}
+```
