@@ -22,7 +22,7 @@ impl Repository {
         let mut clean_repo = Repository::new();
 
         for (path, content) in self.files {
-            let new_path = path.strip_prefix(prefix).unwrap().to_owned();
+            let new_path = path.strip_prefix(&(prefix.to_string() + "/")).unwrap().to_owned();
             clean_repo.files.insert(new_path, content);
         }
 
