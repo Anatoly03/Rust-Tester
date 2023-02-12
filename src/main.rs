@@ -1,5 +1,4 @@
 #![feature(rustc_private)]
-#![feature(try_blocks)]
 
 mod repository;
 mod arg_reader;
