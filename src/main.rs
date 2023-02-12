@@ -23,7 +23,7 @@ fn main() {
     let grading = repository::repo::Repository::from(config.grading.unwrap().as_str()).unwrap();
     let to_grade = repository::repo::Repository::from(config.to_grade.unwrap().as_str()).unwrap();
 
-    let generated = repository::combine::combine(grading, to_grade);
+    let generated = repository::util::combine(grading, to_grade);
     println!("{:#?}", generated.files);
 
     // println!("{:#?}", to_grade.files);
