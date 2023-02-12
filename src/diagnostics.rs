@@ -1,4 +1,4 @@
-#![feature(rustc_private)]
+// https://github.com/rust-lang/rustc-dev-guide/blob/master/examples/rustc-driver-getting-diagnostics.rs
 
 // NOTE: For the example to compile, you will need to first run the following:
 //   rustup component add rustc-dev llvm-tools-preview
@@ -61,7 +61,8 @@ pub fn run() {
             name: source_map::FileName::Custom("main.rs".into()),
             input: "
 fn main() {
-    let x: &str = 1;
+    // let x: &str = 1;
+    println!(\"Hello, World!\");
 }
 "
             .into(),
