@@ -48,6 +48,8 @@ pub fn subtract_two_numbers(a : i64, b : i64) : i64 {
 
 ### Grading Tests
 
+You'll need this later: https://blog.rust-lang.org/2018/12/21/Procedural-Macros-in-Rust-2018.html
+
 ```rs
 #[cfg(test)]
 mod tests {
