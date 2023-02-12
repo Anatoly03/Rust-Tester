@@ -1,3 +1,5 @@
+mod diagnostics;
+
 fn main() {
-    println!("Hello, World!");
+    diagnostics::run();
 }
