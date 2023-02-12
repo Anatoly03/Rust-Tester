@@ -1,5 +1,3 @@
-#![feature(rustc_private)]
-
 // https://github.com/rust-lang/rustc-dev-guide/blob/master/examples/rustc-driver-interacting-with-the-ast.rs
 
 // NOTE: For the example to compile, you will need to first run the following:
@@ -24,7 +22,7 @@ use rustc_errors::registry;
 use rustc_session::config::{self, CheckCfg};
 use rustc_span::source_map;
 
-fn main() {
+pub fn run() {
     let out = process::Command::new("rustc")
         .arg("--print=sysroot")
         .current_dir(".")

@@ -1,5 +1,7 @@
-mod diagnostics;
+#![feature(rustc_private)]
+
+mod ast_reader;
 
 fn main() {
-    diagnostics::run();
+    ast_reader::run();
 }
