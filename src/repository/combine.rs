@@ -20,9 +20,10 @@ pub fn combine(grading: Repository, to_grade: Repository) -> Repository {
     }
 
     for (key, value) in grading.files {
-        // Grading files overwrite as they are prioritized.
-        repo.files.remove(&key);
-        repo.files.insert(key, value);
+        // Place all files that don't exist yet -> testing, parent of src
+        if !repo.files.contains_key(&key) {
+            repo.files.insert(key, value);
+        }
     }
 
     repo
