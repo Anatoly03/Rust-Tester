@@ -18,5 +18,11 @@ use rustc_session::config::{self, CheckCfg};
 use rustc_span::source_map;
 
 pub fn run() {
+
+    // https://doc.rust-lang.org/std/process/index.html <- IO
+    // https://doc.rust-lang.org/std/process/struct.Command.html <- Executing Binaries
+    // https://rustc-dev-guide.rust-lang.org/rustc-driver.html <- rustc driver
+    
+
     todo!()
 }
