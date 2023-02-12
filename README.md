@@ -34,7 +34,7 @@ merges into the following code base:
 └── Cargo.toml  # To-Grade or Grading?
 ```
 
-## Main
+### Main
 
 ```rs
 pub fn add_two_numbers(a : i64, b : i64) : i64 {
@@ -46,7 +46,7 @@ pub fn subtract_two_numbers(a : i64, b : i64) : i64 {
 }
 ```
 
-## Grading Tests
+### Grading Tests
 
 ```rs
 #[cfg(test)]
