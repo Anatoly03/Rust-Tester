@@ -61,8 +61,8 @@ pub fn run() {
             name: source_map::FileName::Custom("main.rs".into()),
             input: "
 fn main() {
-    // let x: &str = 1;
-    println!(\"Hello, World!\");
+    let x: &str = 1;
+    // println!(\"Hello, World!\");
 }
 "
             .into(),
@@ -89,5 +89,10 @@ fn main() {
     });
     // Read buffered diagnostics.
     let diagnostics = String::from_utf8(buffer.lock().unwrap().clone()).unwrap();
+
+    // for d in diagnostics.split('\n') {
+    //     println!("{d}");
+    //     println!();
+    // }
     println!("{diagnostics}");
 }
