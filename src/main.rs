@@ -4,7 +4,6 @@ use std::process::Command;
 
 mod repository;
 mod arg_reader;
-mod templates;
 
 // mod ast_reader;
 // mod diagnostics;
