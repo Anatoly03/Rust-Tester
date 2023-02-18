@@ -32,11 +32,13 @@ fn main() {
 
     let echo = Command::new("cargo")
             .current_dir("debug_test")
-            .args(["test"])
+            .args(["test", "--", "-Z", "unstable-options", "--format", "json"])
             .output()
             .expect("failed to execute process");
 
-    println!("{}", String::from_utf8(echo.stdout).unwrap());
+    let s = String::from_utf8(echo.stdout).unwrap(); //.lines();
+
+    println!("{}", s);
 
     // println!("{:#?}", generated.files);
 
