@@ -11,5 +11,9 @@
     }, {
         "path": "*",
         "action": "KEEP"
+    }],
+    "tests": [{
+        "name": "test::unit::it_works",
+        "should": "PASS"
     }]
 }
