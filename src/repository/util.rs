@@ -8,6 +8,10 @@ use super::repo::Repository;
 pub fn combine(grading: Repository, to_grade: Repository) -> Repository {
     let mut repo = Repository::new();
 
+    let grading_config = json::parse(grading.files.get("Grading.json").unwrap()).unwrap();
+
+    println!("{}", grading_config["files"]);
+
     // TODO don't hardcore this
 
     for (key, value) in to_grade.files {

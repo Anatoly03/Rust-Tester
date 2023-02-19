@@ -1,0 +1,15 @@
+{
+    "files": [{
+        "path": "src/main.rs",
+        "action": "KEEP"
+    }, {
+        "path": "src/test*",
+        "action": "KEEP"
+    }, {
+        "path": "src/*",
+        "action": "COPY"
+    }, {
+        "path": "*",
+        "action": "KEEP"
+    }]
+}
